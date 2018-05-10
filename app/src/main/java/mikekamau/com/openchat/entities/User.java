@@ -5,6 +5,15 @@ public class User {
     private String name;
     private String profileUrlString;
 
+    public User() {
+    }
+
+    public User(String id, String name, String profileUrlString) {
+        this.id = id;
+        this.name = name;
+        this.profileUrlString = profileUrlString;
+    }
+
     public String getId() {
         return id;
     }
