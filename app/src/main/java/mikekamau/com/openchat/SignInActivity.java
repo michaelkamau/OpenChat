@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -31,7 +31,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private TextView openChatHeader;
     private TextView openChatSubHeader;
     private ImageView openChatLogo;
-    private Button googleSignInBtn;
 
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
@@ -50,7 +49,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         openChatHeader = findViewById(R.id.tv_open_chat_header);
         openChatSubHeader = findViewById(R.id.tv_open_chat_subeader);
         openChatLogo = findViewById(R.id.iv_open_chat_logo);
-        googleSignInBtn = findViewById(R.id.btn_google_sign_in);
+        findViewById(R.id.btn_google_sign_in).setOnClickListener(this);
     }
 
     private void configureGoogleSignIn() {
@@ -74,8 +73,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         if (requestCode == REQUEST_CODE_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            GoogleSignInAccount account = task.getResult();
-            authenticateWithFirebase(account);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                authenticateWithFirebase(account);
+            } catch (ApiException e) {
+                Log.w(TAG, "Authentication via Google failed!", e);
+            }
         }
     }
 
