@@ -3,15 +3,14 @@ package mikekamau.com.openchat.entities;
 public class User {
     private String id;
     private String name;
-    private String profileUrlString;
+    private String profilePicUrlString;
 
     public User() {
     }
 
-    public User(String id, String name, String profileUrlString) {
-        this.id = id;
+    public User(String name, String profilePicUrlString) {
         this.name = name;
-        this.profileUrlString = profileUrlString;
+        this.profilePicUrlString = profilePicUrlString;
     }
 
     public String getId() {
@@ -30,11 +29,11 @@ public class User {
         this.name = name;
     }
 
-    public String getProfileUrlString() {
-        return profileUrlString;
+    public String getProfilePicUrlString() {
+        return profilePicUrlString;
     }
 
-    public void setProfileUrlString(String profileUrlString) {
-        this.profileUrlString = profileUrlString;
+    public void setProfilePicUrlString(String profilePicUrlString) {
+        this.profilePicUrlString = profilePicUrlString;
     }
 }

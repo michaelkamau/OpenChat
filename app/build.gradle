@@ -7,7 +7,7 @@ android {
             useSupportLibrary = true
         }
         applicationId "mikekamau.com.openchat"
-        minSdkVersion 21
+        minSdkVersion 27
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -29,6 +29,7 @@ dependencies {
     // Firebase Dependencies
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-auth:15.1.0'
+    implementation 'com.google.firebase:firebase-database:15.0.0'
 
     // Google Sign In SDK
     implementation 'com.google.android.gms:play-services-auth:15.0.1'

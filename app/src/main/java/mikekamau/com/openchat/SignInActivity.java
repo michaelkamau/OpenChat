@@ -89,12 +89,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // user signed in
                             Log.d(TAG, "User Authenticated; Name: " +
                                     FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                            Snackbar.make(findViewById(R.id.activity_sign_in),
-                                    "Authentication successfully via Google",
-                                    Snackbar.LENGTH_LONG).show();
+                            launchMainActivity();
+                            finish();
                         } else {
                             Log.d(TAG, "authenticateWithFirebase failed", task.getException());
                             Snackbar.make(findViewById(R.id.activity_sign_in),
@@ -103,6 +101,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
+    }
+
+    private void launchMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override

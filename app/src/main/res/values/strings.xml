@@ -5,4 +5,6 @@
     <string name="sign_in_subheader">fast, simple chat with the people you care about</string>
     <string name="web_client_id">1090506100741-kspjs38otl63ce39p891on5cq9j9m041.apps.googleusercontent.com</string>
     <string name="type_message_hint">Type a message here</string>
+
+    <string name="empty_message_error">Please type a message or add an attachment</string>
 </resources>
