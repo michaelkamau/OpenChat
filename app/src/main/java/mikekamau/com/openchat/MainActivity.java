@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,6 +20,7 @@ import java.time.Instant;
 
 import mikekamau.com.openchat.entities.ChatMessage;
 import mikekamau.com.openchat.entities.User;
+import mikekamau.com.openchat.messages.FirebaseDBUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -67,7 +69,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         linearLayoutManager.setStackFromEnd(true);
         messageListRecyclerView.setLayoutManager(linearLayoutManager);
 
-
+        //
+        FirebaseRecyclerAdapter fbAdapter = FirebaseDBUtils.getConfiguredFirebaseAdapter(
+                FirebaseDatabase.getInstance().getReference(),
+                firebaseUser
+        );
+        messageListRecyclerView.setAdapter(fbAdapter);
     }
 
     private boolean isUserAuthenticated() {
