@@ -7,6 +7,7 @@
 
     <TextView
         android:id="@+id/tv_sent_message"
+        android:background="@drawable/sent_message_backgroud"
         android:layout_marginStart="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
