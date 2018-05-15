@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Firebase
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private FirebaseRecyclerAdapter fbAdapter;
 
     private String profileName;
     private String profilePicUrl;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         messageListRecyclerView.setLayoutManager(linearLayoutManager);
 
         //
-        FirebaseRecyclerAdapter fbAdapter = FirebaseDBUtils.getConfiguredFirebaseAdapter(
+        fbAdapter = FirebaseDBUtils.getConfiguredFirebaseAdapter(
                 FirebaseDatabase.getInstance().getReference(),
                 firebaseUser
         );
@@ -105,5 +106,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Snackbar.make(findViewById(R.id.main_activity_layout),
                     getString(R.string.empty_message_error), Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        fbAdapter.stopListening();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fbAdapter.startListening();
     }
 }
