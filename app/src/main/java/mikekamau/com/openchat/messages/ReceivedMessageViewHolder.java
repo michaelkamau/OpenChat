@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mikekamau.com.openchat.R;
 import mikekamau.com.openchat.entities.ChatMessage;
+import mikekamau.com.openchat.utils.TimeUtils;
 
 public class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,7 +29,7 @@ public class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final ChatMessage chatMessage) {
         String message = chatMessage.getMessage();
-        String timestamp = chatMessage.getTimestamp();
+        String time = TimeUtils.getTimeFromTimestamp(chatMessage.getTimestamp());
         String name = chatMessage.getSender().getName();
         String profileUrlStr = chatMessage.getSender().getProfilePicUrlString();
 
@@ -39,6 +40,6 @@ public class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
         senderName.setText(name);
         receivedMessage.setText(message);
         // TODO: Provide proper time formatting using some Time utils methods
-        receivedTime.setText(timestamp);
+        receivedTime.setText(time);
     }
 }

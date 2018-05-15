@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import mikekamau.com.openchat.R;
 import mikekamau.com.openchat.entities.ChatMessage;
+import mikekamau.com.openchat.utils.TimeUtils;
 
 public class SentMessageViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,8 +27,7 @@ public class SentMessageViewHolder extends RecyclerView.ViewHolder {
         Log.d(TAG, "Message sent: " + message);
         if (message != null && !message.isEmpty()) {
             sentMessageTextView.setText(message);
-            String timeSent = chatMessage.getTimestamp();
-            //TODO: Create a TimeUtils class for time conversions
+            String timeSent = TimeUtils.getTimeFromTimestamp(chatMessage.getTimestamp());
             sentTimeTextView.setText(timeSent);
         } else {
             Log.d(TAG, "Invalid message");

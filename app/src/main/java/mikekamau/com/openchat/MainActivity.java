@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import mikekamau.com.openchat.entities.ChatMessage;
 import mikekamau.com.openchat.entities.User;
@@ -107,7 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void sendMessage() {
         Instant instant = Instant.now();
-        String now = String.valueOf(instant.toEpochMilli());
+        LocalDateTime currentDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+        String now = currentDateTime.toString();
         User sender = new User(firebaseUser.getUid(), profileName, profilePicUrl);
         final String message = messageTextView.getText().toString();
         if (message != null && !message.isEmpty()) {
