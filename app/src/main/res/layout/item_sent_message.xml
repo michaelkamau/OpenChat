@@ -7,11 +7,16 @@
 
     <TextView
         android:id="@+id/tv_sent_message"
+        android:layout_marginStart="40dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/sample_received_message" />
 
     <TextView
         android:id="@+id/tv_sent_time"
+        android:text="2345"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@id/tv_sent_message"
