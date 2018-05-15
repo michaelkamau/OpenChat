@@ -8,4 +8,5 @@
 
     <string name="empty_message_error">Please type a message or add an attachment</string>
     <string name="sample_received_message">nt had stale data.t had stale data.t had stale datat had stale datat had stale data stale data.t had stale datat had stale datat had stale data stale datat had stale datat had stale data</string>
+    <string name="sign_out_title">Sign Out</string>
 </resources>

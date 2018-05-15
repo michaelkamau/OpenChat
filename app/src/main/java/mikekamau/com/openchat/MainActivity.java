@@ -2,16 +2,24 @@ package mikekamau.com.openchat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,7 +30,7 @@ import mikekamau.com.openchat.entities.ChatMessage;
 import mikekamau.com.openchat.entities.User;
 import mikekamau.com.openchat.messages.FirebaseDBUtils;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "MainActivity";
 
@@ -37,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private FirebaseRecyclerAdapter fbAdapter;
+
+    private GoogleApiClient googleApiClient;
 
     private String profileName;
     private String profilePicUrl;
@@ -60,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 profilePicUrl = firebaseUser.getPhotoUrl().toString();
             }
         }
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API)
+                .build();
 
         messageTextView = findViewById(R.id.ed_message_text);
         sendMessageFab = findViewById(R.id.fab_send_message);
@@ -118,5 +133,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         fbAdapter.startListening();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_sign_out:
+                // log out user
+                firebaseAuth.signOut();
+                Auth.GoogleSignInApi.signOut(googleApiClient);
+                startActivity(new Intent(this, SignInActivity.class));
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d(TAG, "onConnectionFailed: " + connectionResult);
+        Snackbar.make(findViewById(R.id.main_activity_layout),
+                "Connection to Google Services failed", Snackbar.LENGTH_LONG).show();
     }
 }
