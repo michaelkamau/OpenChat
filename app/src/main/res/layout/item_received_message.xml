@@ -29,6 +29,7 @@
             android:id="@+id/tv_received_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/received_message_drawable"
             android:text="@string/sample_received_message" />
 
         <TextView
