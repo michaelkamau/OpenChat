@@ -38,7 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/tv_received_message"
             android:layout_below="@id/tv_received_message"
-            android:text="2313" />
+            android:text="2313"
+            android:textSize="10sp"
+            android:textStyle="italic" />
 
     </RelativeLayout>
 
