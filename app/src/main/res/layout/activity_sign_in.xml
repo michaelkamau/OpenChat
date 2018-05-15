@@ -9,26 +9,37 @@
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:text="@string/sign_in_header"
         android:id="@+id/tv_open_chat_header"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/sign_in_header"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="wrap_content"
         android:id="@+id/tv_open_chat_subeader"
-        android:text="@string/sign_in_subheader"
-        android:layout_height="wrap_content" />
-
-    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:text="@string/sign_in_subheader"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <ImageView
         android:id="@+id/iv_open_chat_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/open_chat_logo_text"
         android:src="@drawable/openchat_logo" />
 
     <com.google.android.gms.common.SignInButton
         android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/btn_google_sign_in"
         android:layout_height="wrap_content" />
 
