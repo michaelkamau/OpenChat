@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void sendMessage() {
         Instant instant = Instant.now();
         String now = String.valueOf(instant.toEpochMilli());
-        User sender = new User(profileName, profilePicUrl);
+        User sender = new User(firebaseUser.getUid(), profileName, profilePicUrl);
         final String message = messageTextView.getText().toString();
         if (message != null && !message.isEmpty()) {
             ChatMessage chatMessage = new ChatMessage(now,

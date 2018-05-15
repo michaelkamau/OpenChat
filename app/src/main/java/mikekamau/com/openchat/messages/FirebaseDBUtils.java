@@ -2,6 +2,7 @@ package mikekamau.com.openchat.messages;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import mikekamau.com.openchat.entities.ChatMessage;
 public class FirebaseDBUtils {
     private static final int MESSAGE_TYPE_SENT = 1;
     private static final int MESSAGE_TYPE_RECEIVED = 2;
+
+    private static final String TAG = "FirebaseDBUtils";
 
     public static FirebaseRecyclerAdapter getConfiguredFirebaseAdapter(
             final DatabaseReference firebaseDatabaseRef,
@@ -64,6 +67,8 @@ public class FirebaseDBUtils {
                     public int getItemViewType(int position) {
                         ChatMessage chatMessage = getItem(position);
                         final String userId = chatMessage.getSender().getId();
+                        Log.d(TAG, "GET_ID: id  = " + userId);
+                        Log.d(TAG, "FIREBASE ID: id = " + firebaseUser.getUid());
                         if (firebaseUser.getUid().equals(userId)) {
                             return MESSAGE_TYPE_SENT;
                         } else {

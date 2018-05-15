@@ -8,7 +8,8 @@ public class User {
     public User() {
     }
 
-    public User(String name, String profilePicUrlString) {
+    public User(String id, String name, String profilePicUrlString) {
+        this.id = id;
         this.name = name;
         this.profilePicUrlString = profilePicUrlString;
     }
