@@ -4,8 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import mikekamau.com.openchat.R;
+import mikekamau.com.openchat.entities.ChatMessage;
 
 public class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
 
@@ -21,5 +24,21 @@ public class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
         receivedMessage = itemView.findViewById(R.id.tv_received_message);
         senderName = itemView.findViewById(R.id.tv_sender_name);
         receivedTime = itemView.findViewById(R.id.tv_time_message_received);
+    }
+
+    public void bind(final ChatMessage chatMessage) {
+        String message = chatMessage.getMessage();
+        String timestamp = chatMessage.getTimestamp();
+        String name = chatMessage.getSender().getName();
+        String profileUrlStr = chatMessage.getSender().getProfilePicUrlString();
+
+        // TODO: Provide alternative profile icon in the event profileUrlStr is null
+        Glide.with(profilePic.getContext())
+                .load(profileUrlStr)
+                .into(profilePic);
+        senderName.setText(name);
+        receivedMessage.setText(message);
+        // TODO: Provide proper time formatting using some Time utils methods
+        receivedTime.setText(timestamp);
     }
 }

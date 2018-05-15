@@ -23,8 +23,9 @@ public class SentMessageViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final ChatMessage chatMessage) {
         String message = chatMessage.getMessage();
+        Log.d(TAG, "Message sent: " + message);
         if (message != null && !message.isEmpty()) {
-            sentTimeTextView.setText(message);
+            sentMessageTextView.setText(message);
             String timeSent = chatMessage.getTimestamp();
             //TODO: Create a TimeUtils class for time conversions
             sentTimeTextView.setText(timeSent);
