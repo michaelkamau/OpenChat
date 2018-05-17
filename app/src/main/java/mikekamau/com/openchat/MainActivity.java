@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ChatMessage chatMessage = new ChatMessage(now,
                     message, null, sender);
             FirebaseDatabase.getInstance().getReference()
+                    .child(FirebaseDBUtils.MESSAGES_CHILD)
                     .push()
                     .setValue(chatMessage);
             messageTextView.setText("");

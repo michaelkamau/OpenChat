@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
@@ -20,6 +21,7 @@ public class FirebaseDBUtils {
     private static final int MESSAGE_TYPE_RECEIVED = 2;
 
     private static final String TAG = "FirebaseDBUtils";
+    public static final String MESSAGES_CHILD = "messages";
 
     public static FirebaseRecyclerAdapter getConfiguredFirebaseAdapter(
             final DatabaseReference firebaseDatabaseRef,
@@ -27,7 +29,7 @@ public class FirebaseDBUtils {
 
         FirebaseRecyclerOptions<ChatMessage> options =
                 new FirebaseRecyclerOptions.Builder<ChatMessage>()
-                        .setQuery(firebaseDatabaseRef, ChatMessage.class)
+                        .setQuery(firebaseDatabaseRef.child(MESSAGES_CHILD), ChatMessage.class)
                         .build();
 
         FirebaseRecyclerAdapter firebaseRecyclerAdapter =
@@ -77,5 +79,9 @@ public class FirebaseDBUtils {
                     }
                 };
         return firebaseRecyclerAdapter;
+    }
+
+    public static FirebaseUser getFirebaseUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 }
