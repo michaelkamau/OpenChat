@@ -31,6 +31,7 @@ import java.time.ZoneOffset;
 import mikekamau.com.openchat.entities.ChatMessage;
 import mikekamau.com.openchat.entities.User;
 import mikekamau.com.openchat.messages.FirebaseDBUtils;
+import mikekamau.com.openchat.messages.MyFirebaseInstanceIdService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (firebaseUser.getPhotoUrl() != null) {
                 profilePicUrl = firebaseUser.getPhotoUrl().toString();
             }
+            new MyFirebaseInstanceIdService().onTokenRefresh();
         }
 
         googleApiClient = new GoogleApiClient.Builder(this)
