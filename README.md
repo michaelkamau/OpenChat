@@ -16,4 +16,9 @@ Features Implemented:
   * Authentication via Google
   * Messages sync via Firebase Realtime Database
   * Single public channel 
+  * Sending of notifications to devices via Firebase Cloud Messaging
+  
+Sample screenshot:
+
+![](images/openchat_screenshot.png)
     
