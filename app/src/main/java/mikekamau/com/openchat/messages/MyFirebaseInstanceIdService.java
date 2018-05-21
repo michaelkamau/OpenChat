@@ -14,7 +14,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
-    private static final String TAG = "MyFirebaseInstanceIdService";
+    private static final String TAG = "MyFBInstanceIdService";
     private static final String FCM_REG_TOKENS = "fcm_registration_tokens";
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
