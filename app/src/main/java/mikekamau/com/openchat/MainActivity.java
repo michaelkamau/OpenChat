@@ -24,16 +24,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
 
 import mikekamau.com.openchat.entities.ChatMessage;
 import mikekamau.com.openchat.entities.User;
 import mikekamau.com.openchat.messages.FirebaseDBUtils;
 import mikekamau.com.openchat.messages.MyFirebaseInstanceIdService;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements
+        View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "MainActivity";
 
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Init Joda Time Lib
+        JodaTimeAndroid.init(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -110,8 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sendMessage() {
-        Instant instant = Instant.now();
-        LocalDateTime currentDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+        DateTime currentDateTime = new DateTime();
         String now = currentDateTime.toString();
         User sender = new User(firebaseUser.getUid(), profileName, profilePicUrl);
         final String message = messageTextView.getText().toString();
