@@ -1,37 +1,53 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+
+// reference: https://github.com/firebase/functions-samples/blob/master/fcm-notifications/functions/index.js
 
 admin.initializeApp();
 
-const MESSAGES_TOPIC = "messages_topic";
+const DEVICES_REG_TOKENS_REF = "/fcm_registration_tokens";
+const MESSAGES_REF = "messages";
 
-export const sendNewMessageNotification = functions.database.ref("{newMessageId}")
+export const sendNewMessageNotification = functions.database.ref("/messages/{newMessageId}")
     .onWrite((newMessageSnapshot, context) => {
-        const message = newMessageSnapshot.after.val();
-        const messageSender = message.sender.name;
-        const profilePic = message.sender.profilePicUrlString;
-        console.log("New Message text: ", message);
+        // Get list of devices reg tokens
+        const getDevicesRegTokensPromise = admin.database()
+            .ref(`${DEVICES_REG_TOKENS_REF}`).once('value');
 
-        const notificationPayload = {
-            notification: {
-                title: "New Message",
-                body: `${messageSender} has sent a new message`,
-                icon: profilePic
+        return getDevicesRegTokensPromise.then((tokensSnapshot) => {
+
+            if (!tokensSnapshot.hasChildren()) {
+                return new Promise(() => {
+                    console.warn("There are no device registrations tokens");
+                })
             }
-        }
 
-        return admin.messaging().sendToTopic(MESSAGES_TOPIC, notificationPayload)
-            .then((response) => {
-                console.log("Successfully sent the notification ", response);
-            })
-            .catch((error) => {
-                console.error("Error in notification ", error);
-            } );
+            // Construct Notification 
+            const message = newMessageSnapshot.after.val();
+            const messageSender = message.sender.name;
+            const profilePic = message.sender.profilePicUrlString;
+            console.log("New Message text: ", message);
+
+            const notificationPayload = {
+                notification: {
+                    title: `${messageSender} has sent a new message`,
+                    body: `${message.message}`,
+                    icon: profilePic
+                }
+            }
+
+            let tokens = [];
+            let tokenKeys = Object.keys(tokensSnapshot.val());
+            for (const key in tokensSnapshot.val()) {
+                if (tokensSnapshot.val().hasOwnProperty(key)) {
+                    const token = tokensSnapshot.val()[key];
+                    tokens.push(token);
+                }
+            }
+            console.log("Reg tokens: ", tokens);
+
+            /// Send notification promise
+            return admin.messaging().sendToDevice(tokens, notificationPayload);
+        });
     });
