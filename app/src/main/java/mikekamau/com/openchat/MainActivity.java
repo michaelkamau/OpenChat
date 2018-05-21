@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements
                 FirebaseDatabase.getInstance().getReference(),
                 firebaseUser
         );
+        FirebaseDBUtils.adjustRVToViewLatestItems(fbAdapter, messageListRecyclerView,
+                linearLayoutManager);
         messageListRecyclerView.setAdapter(fbAdapter);
     }
 

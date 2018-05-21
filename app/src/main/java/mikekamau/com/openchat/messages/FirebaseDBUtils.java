@@ -1,6 +1,7 @@
 package mikekamau.com.openchat.messages;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,6 +81,38 @@ public class FirebaseDBUtils {
                 };
         return firebaseRecyclerAdapter;
     }
+
+    /**
+     * Ensures that the RecyclerView scrolls to the last item once the adapter has more items than
+     * can fit the screen.
+     *
+     * @param recyclerAdapter
+     * @param recyclerView
+     * @param linearLayoutManager
+     */
+    public static void adjustRVToViewLatestItems(
+            final FirebaseRecyclerAdapter recyclerAdapter,
+            final RecyclerView recyclerView,
+            final LinearLayoutManager linearLayoutManager) {
+        recyclerAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int messageCount = recyclerAdapter.getItemCount();
+                int lastVisiblePosition =
+                        linearLayoutManager.findLastCompletelyVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (messageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    recyclerView.scrollToPosition(positionStart);
+                }
+            }
+        });
+    }
+
 
     public static FirebaseUser getFirebaseUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
