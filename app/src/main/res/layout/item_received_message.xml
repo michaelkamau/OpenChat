@@ -15,7 +15,6 @@
         android:id="@+id/tv_sender_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_received_profile_pic"
         android:layout_toEndOf="@id/iv_received_profile_pic"
         android:text="mike kamau" />
 
